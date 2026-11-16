@@ -1,5 +1,4 @@
 
-cat > README.md <<'EOF'
 # Universal API Data Pipeline
 
 **A configurable Python ETL framework for REST API ingestion, automated data profiling, historical monitoring, and anomaly detection.**
