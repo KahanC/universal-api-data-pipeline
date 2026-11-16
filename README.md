@@ -9,210 +9,74 @@ Built to transform raw API responses into validated, analysis-ready datasets and
 
 **Tech Stack:** Python | REST APIs | Pandas | SQLite | OpenPyXL | GitHub Actions
 
-## Key Features
+**A configuration-driven Python ETL framework for ingesting REST API data, validating data quality, profiling datasets, detecting anomalies, and monitoring changes across pipeline runs.**
 
-- **Configurable API connectors:** Retrieve data from different REST APIs using JSON configuration files.
-- **Automated pagination:** Collect multi-page API responses.
-- **Authentication support:** Configurable API authentication methods.
-- **JSON normalization:** Transform nested API responses into structured tabular datasets.
-- **Data validation:** Detect missing values, duplicate records, and invalid numerical values.
-- **Automatic data profiling:** Generate completeness metrics, column statistics, and categorical summaries.
-- **Historical monitoring:** Persist dataset quality snapshots in SQLite.
-- **Anomaly detection:** Identify record-count drops, completeness deterioration, duplicate increases, and schema drift.
-- **Automated reporting:** Export data and monitoring results to CSV, Excel, JSON, and Markdown.
-- **Continuous integration:** Automated Python unit testing using GitHub Actions.
+Built to demonstrate production-oriented data engineering practices, including reusable API connectors, pagination, automated quality checks, historical monitoring, and reproducible reporting.
 
-## Architecture
+### Key capabilities
 
-```text
-              REST API Sources
-                     |
-              JSON Configurations
-                     |
-               API Client
-                     |
-             Pagination Engine
-                     |
-             JSON Normalization
-                     |
-              Data Validation
-                     |
-             Statistical Profiling
-                     |
-             Historical Snapshots
-                  (SQLite)
-                     |
-              Anomaly Detection
-                     |
-              Report Generation
-                     |
-       +-------------+-------------+
-       |             |             |
-     CSV/Excel    JSON/Markdown   SQLite
-     Reports      Monitoring      History
-```
-
-## Supported API Examples
-
-| API | Dataset | Purpose |
-|---|---|---|
-| World Bank API | GDP indicators | Economic time-series ingestion |
-| JSONPlaceholder | User records | Nested JSON normalization |
-
-The pipeline is designed to support additional compatible REST APIs through configuration.
-
-## Automated Data Profiling
-
-Each pipeline execution generates a statistical profile containing:
-
-- Dataset dimensions and completeness
-- Missing-value counts and percentages
-- Duplicate-record counts
-- Column-level data types
-- Numerical summary statistics
-- Categorical distributions
-
-Profiling results are integrated into the Excel reporting workflow.
-
-## Historical Monitoring & Anomaly Detection
-
-The system stores historical dataset profiles in SQLite and compares subsequent runs against previous snapshots.
-
-| Detection Rule | Description |
+| Capability | Implementation |
 |---|---|
-| Row Count Drop | Detects significant reductions in retrieved records |
-| Completeness Drop | Detects deterioration in data completeness |
-| Duplicate Increase | Detects increases in duplicate records |
-| Schema Drift | Detects added or removed columns |
+| API ingestion | Reusable REST API client with configurable endpoints and authentication |
+| ETL processing | JSON normalization and configuration-driven transformations |
+| Data quality | Missing-value, uniqueness, and non-negative validation |
+| Automatic profiling | Completeness, duplicates, numeric statistics, and categorical distributions |
+| Historical monitoring | SQLite snapshots and comparisons between pipeline runs |
+| Anomaly detection | Schema drift, row-count changes, completeness drops, and duplicate increases |
+| Reporting | Excel, CSV, JSON, and Markdown outputs |
+| Automated testing | Python `unittest` suite with GitHub Actions CI |
 
-Monitoring results are exported in machine-readable JSON, human-readable Markdown, and Excel formats.
-
-## Anomaly Detection Demonstration
-
-A synthetic transaction dataset demonstrates four monitoring alerts:
-
-| Metric | Previous Run | Current Run |
-|---|---:|---:|
-| Records | 100 | 60 |
-| Completeness | 100% | 87.5% |
-| Duplicate Rows | 0 | 1 |
-| Columns | 3 | 2 |
-
-**Detected anomalies:**
-- 40% record-count reduction
-- 12.5 percentage-point completeness deterioration
-- Increased duplicate records
-- Schema drift
-
-### Example Monitoring Reports
-
-- [JSON Monitoring Report](examples/reports/synthetic_transactions_monitoring.json)
-- [Markdown Monitoring Report](examples/reports/synthetic_transactions_monitoring.md)
-- [Excel Monitoring Report](examples/reports/synthetic_transactions_monitoring.xlsx)
-
-All demonstration data is synthetic.
-
-## Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/KahanC/universal-api-data-pipeline.git
-cd universal-api-data-pipeline
-```
-
-### 2. Create a virtual environment
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-### 3. Install dependencies
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-### 4. Run the World Bank pipeline
-
-```bash
-python src/run_pipeline.py --config configs/world_bank.json
-```
-
-### 5. Run the JSONPlaceholder pipeline
-
-```bash
-python src/run_pipeline.py --config configs/users.json
-```
-
-Generated data and reports are saved in the `outputs/` directory.
-
-## Run the Anomaly Demonstration
-
-```bash
-python examples/demo_anomalies.py
-```
-
-This generates synthetic anomaly monitoring reports under `examples/reports/`.
-
-## Automated Testing
-
-Run the complete test suite:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-The project includes **23 automated tests** covering:
-
-- API pagination
-- Data validation
-- Statistical profiling
-- Historical snapshot storage
-- Anomaly detection
-- Monitoring report generation
-
-GitHub Actions executes the test suite on pushes and pull requests to the main branch.
-
-## Project Structure
+### Architecture
 
 ```text
-universal-api-data-pipeline/
-├── .github/workflows/
-│   └── python-ci.yml
-├── configs/
-│   ├── world_bank.json
-│   └── users.json
-├── examples/
-│   ├── demo_anomalies.py
-│   └── reports/
-├── src/
-│   ├── api_client.py
-│   ├── pagination.py
-│   ├── validation.py
-│   ├── profiling.py
-│   ├── history.py
-│   ├── anomaly_detection.py
-│   ├── monitoring_reports.py
-│   ├── excel_report.py
-│   └── run_pipeline.py
-├── tests/
-├── requirements.txt
-└── README.md
+REST APIs
+   |
+   v
+Configurable API Client
+   |
+   v
+Pagination & JSON Extraction
+   |
+   v
+Data Transformation
+   |
+   v
+Data Quality Validation
+   |
+   v
+Automatic Data Profiling
+   |
+   +------> Historical SQLite Snapshots
+   |                  |
+   |                  v
+   |           Anomaly Detection
+   |                  |
+   v                  v
+CSV / Excel       Monitoring Reports
+                  JSON / Markdown / Excel
 ```
 
-## Security & Reproducibility
+### Example integrations
 
-- Credentials are excluded from version control.
-- Generated datasets and local SQLite databases are ignored by Git.
-- Public API examples require no private credentials.
-- Unit tests use controlled test data.
-- Dependency versions are specified in `requirements.txt`.
+- **World Bank API:** Historical GDP data retrieved and transformed into structured economic datasets.
+- **JSONPlaceholder API:** Nested user records normalized into tabular data.
+- **Synthetic transaction monitoring:** Demonstrates anomaly detection using controlled example data.
 
-## Engineering Focus
+### Example monitoring outputs
 
-This project demonstrates reusable API integration, ETL architecture, automated data-quality controls, historical monitoring, anomaly detection, and reproducible reporting.
+- [JSON monitoring report](examples/reports/synthetic_transactions_monitoring.json)
+- [Markdown monitoring report](examples/reports/synthetic_transactions_monitoring.md)
+- [Excel monitoring report](examples/reports/synthetic_transactions_monitoring.xlsx)
+- [Synthetic anomaly demonstration](examples/demo_anomalies.py)
 
-The framework extends an earlier Amazon Seller Central invoicing automation concept into a generic, multi-source data engineering system.
-EOF
+### Engineering decisions
+
+**Configuration over hardcoding:** API-specific settings are separated from pipeline logic, allowing different data sources to reuse the same processing framework.
+
+**Validation before reporting:** Data quality checks run before downstream reporting to prevent invalid datasets from silently propagating.
+
+**Historical monitoring:** SQLite stores lightweight pipeline snapshots, enabling comparisons between runs without requiring an external database server.
+
+**Testable architecture:** Pagination, validation, profiling, historical storage, and anomaly detection are covered by automated unit tests.
+
+**Portable execution:** The framework runs locally using Python and is tested through GitHub Actions without requiring Docker or cloud infrastructure.
