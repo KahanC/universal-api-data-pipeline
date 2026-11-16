@@ -1,0 +1,49 @@
+{
+  "pipeline": "synthetic_transactions",
+  "generated_at": "2026-11-16T20:44:51.356048+00:00",
+  "status": "alert",
+  "alert_count": 4,
+  "summary": {
+    "previous_rows": 100,
+    "current_rows": 60,
+    "previous_completeness": 100.0,
+    "current_completeness": 87.5
+  },
+  "alerts": [
+    {
+      "code": "ROW_COUNT_DROP",
+      "severity": "high",
+      "message": "Record count decreased 40.00%",
+      "previous": 100,
+      "current": 60
+    },
+    {
+      "code": "COMPLETENESS_DROP",
+      "severity": "high",
+      "message": "Completeness declined 12.50 percentage points",
+      "previous": 100.0,
+      "current": 87.5
+    },
+    {
+      "code": "DUPLICATE_INCREASE",
+      "severity": "medium",
+      "message": "Duplicate row count increased",
+      "previous": 0,
+      "current": 1
+    },
+    {
+      "code": "SCHEMA_DRIFT",
+      "severity": "high",
+      "message": "Removed columns: ['Region']; Added columns: []",
+      "previous": [
+        "Amount",
+        "Order ID",
+        "Region"
+      ],
+      "current": [
+        "Amount",
+        "Order ID"
+      ]
+    }
+  ]
+}

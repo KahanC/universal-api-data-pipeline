@@ -1,0 +1,49 @@
+{
+  "name": "world_bank",
+  "base_url": "https://api.worldbank.org/v2",
+  "endpoint": "country/CA;US;IN;GB/indicator/NY.GDP.MKTP.CD",
+  "params": {
+    "format": "json",
+    "date": "2015:2024",
+    "per_page": 10
+  },
+  "record_path": "1",
+  "pagination": {
+    "strategy": "world_bank",
+    "page_param": "page",
+    "max_pages": 20
+  },
+  "fields": {
+    "country.value": "Country",
+    "countryiso3code": "Country Code",
+    "date": "Year",
+    "value": "GDP (USD)"
+  },
+  "validation": {
+    "required_columns": [
+      "Country",
+      "Country Code",
+      "Year",
+      "GDP (USD)"
+    ],
+    "not_null": [
+      "Country Code",
+      "Year"
+    ],
+    "unique": [
+      "Country Code",
+      "Year"
+    ],
+    "min_rows": 1,
+    "non_negative": []
+  },
+  "monitoring": {
+    "enabled": true,
+    "thresholds": {
+      "row_drop_pct": 20,
+      "row_increase_pct": 50,
+      "completeness_drop_pp": 5,
+      "duplicate_increase": 0
+    }
+  }
+}

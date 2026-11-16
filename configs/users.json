@@ -1,0 +1,42 @@
+{
+  "name": "users",
+  "base_url": "https://jsonplaceholder.typicode.com",
+  "endpoint": "users",
+  "params": {},
+  "record_path": "",
+  "fields": {
+    "id": "User ID",
+    "name": "Name",
+    "email": "Email",
+    "address.city": "City",
+    "company.name": "Company"
+  },
+  "validation": {
+    "required_columns": [
+      "User ID",
+      "Name",
+      "Email"
+    ],
+    "not_null": [
+      "User ID",
+      "Name",
+      "Email"
+    ],
+    "unique": [
+      "User ID"
+    ],
+    "min_rows": 1,
+    "non_negative": [
+      "User ID"
+    ]
+  },
+  "monitoring": {
+    "enabled": true,
+    "thresholds": {
+      "row_drop_pct": 20,
+      "row_increase_pct": 50,
+      "completeness_drop_pp": 5,
+      "duplicate_increase": 0
+    }
+  }
+}
