@@ -1,6 +1,8 @@
 
 # Universal API Data Pipeline
 
+[![Python CI](https://github.com/KahanC/universal-api-data-pipeline/actions/workflows/python-ci.yml/badge.svg)](https://github.com/KahanC/universal-api-data-pipeline/actions/workflows/python-ci.yml)
+
 **A configurable Python ETL framework for REST API ingestion, automated data profiling, historical monitoring, and anomaly detection.**
 
 Built to transform raw API responses into validated, analysis-ready datasets and automated reporting outputs.
